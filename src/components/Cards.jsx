@@ -2,9 +2,19 @@ import React from 'react'
 import Card from './Card'
 import toast, { Toaster } from "react-hot-toast"
 
-export default function Cards({ data, category }) {
+export default function Cards({ data, category, cart, setCart}) {
     function toastMessege(productName){
-        toast.success(`${productName} added succesfully..`)
+        
+        if (cart.includes(productName)){
+          cart.pop(productName)
+          toast.error(`${productName} removed !`)
+        }
+        else{
+          cart.push(productName)
+          toast.success(`${productName} added succesfully`);
+        }
+        setCart(cart)
+        console.log(cart)
     }
     let productsData = data
     if(category!=="all"){
@@ -15,7 +25,7 @@ export default function Cards({ data, category }) {
 
     {
         productsData.map((cardData)=>
-            <Card key={cardData.id} data={cardData} toast={toastMessege}/>
+            <Card key={cardData.id} data={cardData} toast={toastMessege} cart={cart}/>
         )
     }
     <Toaster/>
