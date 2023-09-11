@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 export default function Categories({setCategory}) {
-
   let [isClicked , setIsClicked] = useState(false);
   function categoryHandler(categoryName) {
     setIsClicked(true)
