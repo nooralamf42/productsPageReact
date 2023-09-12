@@ -1,28 +1,18 @@
 import React from "react";
 import { useState } from "react";
 
-export default function Card(props) {
-  let data = props.data;
+export default function Card({data, setCart, cart}) {
   let [isProductinCart, setIsProducinCart] = useState(false);
   let putProduct  = false
+
   function clickHandler(){
-    if(!props.cart.length){
-      putProduct  = true
-      setIsProducinCart(true)
-    }
-    else{
-      props.cart.filter((item)=>{
-        if(item.title==data.title){
-          putProduct  = false
-        }
-        else{
-          putProduct = true
-          setIsProducinCart(true)
-        }
+      setCart((oldItems)=>{
+        return oldItems.filter((oldItem)=>{
+          return oldItem.title!==data.title
+        })
       })
     }
-    props.toast(data, putProduct);
-  }
+ 
 
   return (
     <div className="w-[350px] min-h-[480px] border rounded-lg overflow-hidden relative hover:shadow-xl hover:shadow-[#bfbfbf] drop-shadow-2xl cursor-pointer mb-4">

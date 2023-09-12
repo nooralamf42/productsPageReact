@@ -2,19 +2,31 @@ import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Categories from "./components/Categories";
 import Cards from "./components/Cards";
-import Cart from "./components/Cart";
+// import Cart from "./components/Cart";
 import "./App.css";
 import Spinner from "./components/Spinner";
 import { Cat404 } from "@404pagez/react";
 
 function App() {
-  let [cart, setCart] = useState([]);
+
+  let [cart, setCart] = useState([{title: "iPhone X"}]);
+
+
   let [category, setCategory] = useState("all");
+
+
   let [data, setData] = useState([]);
-  let [dataFetched, setDatFetched] = useState(false);
+
+
+  let [dataFetched, setDatFetched] = useState(false); 
+
+
   let [err, setErr] = useState(false);
-  let [showCart, setShowCart] = useState(false);
-  let [productsData, setProductsData] = useState([])
+
+
+  // let [showCart, setShowCart] = useState(false);
+
+
 
   async function getData() {
     try {
@@ -42,19 +54,19 @@ function App() {
 
   return (
     <div>
-      <Cart cart={cart} setCart={setCart} showCart={showCart} setShowCart={setShowCart} />
+      {/* <Cart cart={cart} setCart={setCart} showCart={showCart} setShowCart={setShowCart} /> */}
 
-      <div className={showCart ? "hidden" : "block"}>
+      {/* <div className={showCart ? "hidden" : "block"}> */}
+
         <Navbar />
-        <Categories setCategory={setCategory} data={data} />
+
+        <Categories setCategory={setCategory} category={category} />
         {dataFetched ? (
           <Cards
             data={data}
             category={category}
             setCart={setCart}
             cart={cart}
-            productsData={productsData}
-            setProductsData={setProductsData}
           />
         ) : (
           <Spinner />
@@ -62,7 +74,7 @@ function App() {
         <div className="text-center bg-white absolute top-0 z-40 w-full">
           {err ? <Cat404 size={100} /> : null}
         </div>
-      </div>
+      {/* </div> */}
     </div>
   );
 }

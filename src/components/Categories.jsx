@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 
-export default function Categories({setCategory}) {
-  let [isClicked , setIsClicked] = useState(false);
+export default function Categories({setCategory,category}) {
+  let receivedCatagory = category;
+  let isClicked  = false;
   function categoryHandler(categoryName) {
-    setIsClicked(true)
+    isClicked = true;
     setCategory(categoryName.toLowerCase());
   }
 
@@ -23,7 +24,7 @@ export default function Categories({setCategory}) {
         <button
           onClick={() => categoryHandler(category)}
           key={category}
-          className="px-4 py-2 bg-gray-300 rounded-full text-gray-600 hover:bg-gray-200 whitespace-nowrap"
+          className={`${category.toLowerCase()==receivedCatagory?"border border-gray-500": " border-white"} px-4 py-2 bg-gray-300 rounded-full text-gray-600 hover:bg-gray-200 whitespace-nowrap`}
         >
           {category}
         </button>
