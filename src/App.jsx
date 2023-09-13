@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Categories from "./components/Categories";
 import Cards from "./components/Cards";
-// import Cart from "./components/Cart";
+import Cart from "./components/Cart";
 import "./App.css";
 import Spinner from "./components/Spinner";
 import { Cat404 } from "@404pagez/react";
+import toast, { Toaster } from "react-hot-toast"
 
 function App() {
 
-  let [cart, setCart] = useState([{title: "iPhone X"}]);
+  let [cart, setCart] = useState([]);
 
 
   let [category, setCategory] = useState("all");
@@ -24,9 +25,12 @@ function App() {
   let [err, setErr] = useState(false);
 
 
-  // let [showCart, setShowCart] = useState(false);
+  let [showCart, setShowCart] = useState(false);
 
 
+  function toastMessage(currentItemName){
+    !cart.includes(currentItemName)?toast.success(currentItemName + " addeded in cart"): toast.error(currentItemName + " removed from cart")
+  }
 
   async function getData() {
     try {
@@ -51,12 +55,12 @@ function App() {
   }, []);
 
   
-
   return (
     <div>
-      {/* <Cart cart={cart} setCart={setCart} showCart={showCart} setShowCart={setShowCart} /> */}
+      <Toaster/>
+      <Cart cart={cart} setCart={setCart} showCart={showCart} setShowCart={setShowCart} data={data}/>
 
-      {/* <div className={showCart ? "hidden" : "block"}> */}
+      <div className={showCart ? "hidden" : "block"}>
 
         <Navbar />
 
@@ -67,6 +71,7 @@ function App() {
             category={category}
             setCart={setCart}
             cart={cart}
+            toastMessage={toastMessage}
           />
         ) : (
           <Spinner />
@@ -74,7 +79,7 @@ function App() {
         <div className="text-center bg-white absolute top-0 z-40 w-full">
           {err ? <Cat404 size={100} /> : null}
         </div>
-      {/* </div> */}
+      </div>
     </div>
   );
 }

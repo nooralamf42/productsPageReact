@@ -1,26 +1,30 @@
 import React from "react";
 import { useState } from "react";
 
-export default function Card({data, setCart, cart}) {
-  let [isProductinCart, setIsProducinCart] = useState(false);
-  let putProduct  = false
+export default function Card({data, setCart, cart, toastMessage}) {
 
   function clickHandler(){
-      setCart((oldItems)=>{
-        return oldItems.filter((oldItem)=>{
-          return oldItem.title!==data.title
-        })
-      })
+    toastMessage(data.title)
+    if(cart.includes(data.title))
+    setCart((cartItems)=>cartItems.filter((cartItem)=>
+    cartItem!==data.title
+    ))
+    else{
+      if(cart.length)
+      setCart(cartItems=>[...cartItems,data.title])
+      else{
+        setCart([data.title])
+      }
     }
- 
+  }
 
   return (
     <div className="w-[350px] min-h-[480px] border rounded-lg overflow-hidden relative hover:shadow-xl hover:shadow-[#bfbfbf] drop-shadow-2xl cursor-pointer mb-4">
         <button
-          className={`px-4 py-2 ${isProductinCart? "bg-green-500 hover:bg-green-500 hover:text-white hover:border-none cursor-auto": "bg-black"} text-white rounded-tr-lg rounded-bl-lg hover:text-black hover:border hover:bg-white whitespace-nowrap absolute bottom-4 ms-4`}
+          className={`px-4 py-2 ${cart.includes(data.title)? "bg-red-500 hover:bg-green-500 ": "bg-black"} text-white rounded-tr-lg rounded-bl-lg hover:text-black hover:border hover:bg-white whitespace-nowrap absolute bottom-4 ms-4`}
           onClick={clickHandler}
         >
-          {!isProductinCart?"Add to cart":"Already in cart"}
+          {!cart.includes(data.title)?"Add to cart":"Remove from cart"}
         </button>
       <div className="w-full h-[231px] overflow-hidden">
         <img src={data.thumbnail} loading="turtle" />
