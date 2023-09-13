@@ -33,6 +33,7 @@ function App() {
   }
 
   async function getData() {
+    setErr(false);
     try {
       let api = await fetch("https://dummyjson.com/products");
       if (!api.ok) {
